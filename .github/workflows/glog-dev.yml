@@ -2,6 +2,11 @@ name: Glog Scan (dev)
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: read
+  security-events: write
+
 jobs:
   glog-scan:
     runs-on: ubuntu-latest
@@ -31,9 +36,18 @@ jobs:
         uses: ./.github/glog-action
         with:
           client: 'swissdemo'
-          lang: 'java'
-          upload: 'true'
           github-token: ${{ secrets.PAT_TOKEN }}
           glog-token: ${{ secrets.GLOG_TOKEN }}
+          upload: 'true'
+          on-prem-upload: 'true'
+          issue: 'false'
+          autofix: 'false'
+          sarif-format-type: 'GITHUB'
+          server-sarif-format-type: 'STANDARD'
+          sbom: 'true'
+          supply-chain: 'true'
+          rebuild: 'true'
+          rebuild-max-packages: '25'
           env: 'dev'
-    
+          scl-uuid: 'ccd5bc79-045b-465a-8ec4-4d5c8683a99b'
+
